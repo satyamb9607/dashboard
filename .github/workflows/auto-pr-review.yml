@@ -56,7 +56,7 @@ jobs:
       - name: Post Review Comment on PR
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GTTOKEN }}
           script: |
             const review = process.env.REVIEW;
             github.rest.issues.createComment({
