@@ -7,6 +7,7 @@ on:
 permissions:
   contents: read
   pull-requests: write
+  id-token: write
 
 jobs:
   review:
@@ -31,14 +32,7 @@ jobs:
         with:
           github-token: ${{ secrets.GTTOKEN }}
           script: |
-            const output = core.getInput("output", { required: false }) || process.env.CLAUDE_OUTPUT || "";
-
-            // fallback to action output
-            const review = core.getInput("claude_output") 
-              || (await core.getState("claude_output")) 
-              || output 
-              || `${{ steps.claude.outputs.output }}`;
-
+            const review = process.env.CLAUDE_OUTPUT || `${{ steps.claude.outputs.output }}` || "";
             if (!review || review.trim() === "") {
               core.warning("Claude returned no review");
             } else {
